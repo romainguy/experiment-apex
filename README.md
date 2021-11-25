@@ -49,6 +49,12 @@ If you'd like to play with this codebase a bit, here are a few things you could 
 - Make this a multi-platform UI Toolkit! Remove Android-specific APIs (`Canvas`, `Bitmap`, etc.)
   and use your own abstractions. For rendering use [skiko](https://github.com/JetBrains/skiko)
 
+## Screenshot
+
+Not super exciting, but here it is:
+
+![Apex demo: a photo centered on screen with two buttons below, Previous and Next](./assets/apex_demo.png)
+
 ## License
 
 See [LICENSE](./LICENSE).
