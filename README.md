@@ -23,7 +23,7 @@ For instance a `Button` is an `Element` with the following components:
 - An `InternalState`, to track the pressed state of the button
 
 Apex also offers `Provider` instances, which are roughly equivalent to Jetpack Compose's composition
-locals. The give access to global data throughout the tree: `Resources`, display density, the
+locals. They give access to global data throughout the tree: `Resources`, display density, the
 current theme, etc. Any `Element` can inject new providers or override existing providers by using
 the `ProviderComponent` component. `MainActivity` shows an example of using a `ThemeProvider` to
 modify the current theme.
@@ -34,8 +34,8 @@ If you'd like to play with this codebase a bit, here are a few things you could 
 
 - Optimize components lookup. Right now, every lookup iterates over a flat list. It's not a big deal
   since most elements will have a short list but this could be improved. Since it's intended that an
-  element can own multiple components of the same type, you'd probable a data structure that maps
-  component types to a list (a linked hashmap for instance)
+  element can own multiple components of the same type, you'd probably have a data structure that
+  maps component types to a list (a linked hashmap for instance)
 - Optimize providers handling. Every layout/render/motion input phase currently re-applies the
   providers. It's not very efficient. And the layout phase doesn't correctly apply the providers at
   every level of the tree
@@ -47,7 +47,7 @@ If you'd like to play with this codebase a bit, here are a few things you could 
   other things)
 - Cleanup the inline/noinline/crossinline and reified generic mess in the various helper functions
 - Make this a multi-platform UI Toolkit! Remove Android-specific APIs (`Canvas`, `Bitmap`, etc.)
-  and use your own abstractions. For rendering use [skiko](https://github.com/JetBrains/skiko)
+  and use your own abstractions. For rendering, use [skiko](https://github.com/JetBrains/skiko)
 
 ## Screenshot
 
