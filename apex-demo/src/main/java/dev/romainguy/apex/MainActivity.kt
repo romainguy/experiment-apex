@@ -5,6 +5,11 @@ import android.graphics.*
 import android.os.Bundle
 import android.util.SizeF
 
+enum class Id {
+    ButtonNext,
+    ButtonPrevious
+}
+
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,26 +60,23 @@ class MainActivity : Activity() {
                 val image = Image(ImageModel(TestImage[imageIndex]))
 
                 Row {
-                    val previous = Button(ButtonModel("Previous", State.Disabled))
-                    val next = Button(ButtonModel("Next"))
-
-                    previous.component<ButtonModel>().onClick = {
+                    Button(ButtonModel("Previous", State.Disabled) { previous ->
                         if (imageIndex > 0) imageIndex--
-                        next.component<ButtonModel>().state =
+                        requireChild(Id.ButtonNext).component<ButtonModel>().state =
                             if (imageIndex < TestImage.size) State.Enabled else State.Disabled
                         previous.component<ButtonModel>().state =
                             if (imageIndex > 0) State.Enabled else State.Disabled
-                        image .component<ImageModel>().bitmap = TestImage[imageIndex]
-                    }
+                        image.component<ImageModel>().bitmap = TestImage[imageIndex]
+                    }).addComponent(Id.ButtonPrevious)
 
-                    next.component<ButtonModel>().onClick = {
+                    Button(ButtonModel("Next") { next ->
                         if (imageIndex < TestImage.size - 1) imageIndex++
                         next.component<ButtonModel>().state =
                             if (imageIndex < TestImage.size - 1) State.Enabled else State.Disabled
-                        previous.component<ButtonModel>().state =
+                        requireChild(Id.ButtonPrevious).component<ButtonModel>().state =
                             if (imageIndex > 0) State.Enabled else State.Disabled
-                        image .component<ImageModel>().bitmap = TestImage[imageIndex]
-                    }
+                        image.component<ImageModel>().bitmap = TestImage[imageIndex]
+                    }).addComponent(Id.ButtonNext)
                 }
             }
         }
@@ -84,9 +86,9 @@ class MainActivity : Activity() {
 // Example of creating your own widget. The code below uses convenience functions but it could
 // be written as:
 // val element = Element()
-// element.addComponent(model)
-// element.addComponent(object : LayoutComponent { … })
-// element.addComponent(object : RenderComponent { … })
+//     .addComponent(model)
+//     .addComponent(object : LayoutComponent { … })
+//     .addComponent(object : RenderComponent { … })
 
 class ImageModel(var bitmap: Bitmap)
 

@@ -13,9 +13,10 @@ open class Element(content: Element.() -> Unit = { }) {
         content()
     }
 
-    fun addChild(child: Element) {
+    fun addChild(child: Element): Element {
         child.parent = this
         children.add(child)
+        return this
     }
 
     fun child(action: (Element) -> Unit) {
@@ -24,8 +25,33 @@ open class Element(content: Element.() -> Unit = { }) {
         }
     }
 
-    fun addComponent(component: Any) {
+    fun findChild(predicate: (Element) -> Boolean): Element? {
+        for (child in children) {
+            if (predicate(child)) return child
+            val candidate = child.findChild(predicate)
+            if (candidate != null) return candidate
+        }
+        return null
+    }
+
+    fun requireChild(predicate: (Element) -> Boolean): Element {
+        for (child in children) {
+            if (predicate(child)) return child
+            val candidate = child.findChild(predicate)
+            if (candidate != null) return candidate
+        }
+        throw IllegalArgumentException("Cannot find child matching predicate")
+    }
+
+    inline fun <reified T : Any> findChild(componentValue: T) =
+        findChild { it.componentOrNull(T::class) == componentValue }
+
+    inline fun <reified T : Any> requireChild(componentValue: T) =
+        requireChild { it.componentOrNull(T::class) == componentValue }
+
+    fun addComponent(component: Any): Element {
         components.add(component)
+        return this
     }
 
     @Suppress("UNCHECKED_CAST")

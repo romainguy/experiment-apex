@@ -9,6 +9,7 @@ import android.util.DisplayMetrics
 import kotlin.collections.MutableMap
 import kotlin.collections.mutableMapOf
 import kotlin.collections.set
+import kotlin.math.floor
 import kotlin.reflect.KClass
 
 class Providers {
@@ -37,9 +38,17 @@ class Providers {
 }
 
 class DensityProvider(val density: Float) {
-    fun toPx(v: Float) = ((v * density) + 0.5f)
+    fun toPx(v: Float) = floor((v * density) + 0.5f)
     fun toPx(r: RectF) = RectF(toPx(r.left), toPx(r.top), toPx(r.right), toPx(r.bottom))
 }
+
+context(DensityProvider)
+@Suppress("NOTHING_TO_INLINE")
+inline fun Float.toPx() = toPx(this)
+
+context(DensityProvider)
+@Suppress("NOTHING_TO_INLINE")
+inline fun RectF.toPx() = toPx(this)
 
 class DisplayProvider(val display: DisplayMetrics)
 

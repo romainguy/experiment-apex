@@ -38,7 +38,6 @@ fun Element.Layout(layout: (providers: Providers, element: Element, size: SizeF)
         override fun layout(providers: Providers, element: Element, size: SizeF): SizeF {
             return layout(providers, element, size)
         }
-
     })
 }
 
