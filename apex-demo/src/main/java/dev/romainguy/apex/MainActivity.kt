@@ -104,11 +104,10 @@ fun Element.Image(model: ImageModel) = ChildElement {
         var width = bitmap.width.toFloat()
         var height = bitmap.height.toFloat()
 
-        val scale: Float
-        if (width * size.height < size.width * height) {
-            scale = size.height / height
+        val scale = if (width * size.height < size.width * height) {
+            size.height / height
         } else {
-            scale = size.width / width
+            size.width / width
         }
 
         width *= scale
