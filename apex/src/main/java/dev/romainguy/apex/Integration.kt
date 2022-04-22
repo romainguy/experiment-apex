@@ -73,7 +73,7 @@ private fun motion(
     element.child { child ->
         val localProviders = providers.copyOf()
 
-        child.component<ProviderComponent>{
+        child.component<ProviderComponent> {
             provide(localProviders, child)
         }
 
@@ -111,7 +111,7 @@ private class RootElement(context: Context) : Element() {
             if (surface == null) return
 
             val rootProviders = providers.copyOf()
-            component<ProviderComponent>{
+            component<ProviderComponent> {
                 provide(rootProviders, this@RootElement)
             }
 
@@ -146,7 +146,7 @@ private class RootElement(context: Context) : Element() {
 
     fun onMotion(event: MotionEvent): Boolean {
         val rootProviders = providers.copyOf()
-        component<ProviderComponent>{
+        component<ProviderComponent> {
             provide(rootProviders, this@RootElement)
         }
 
