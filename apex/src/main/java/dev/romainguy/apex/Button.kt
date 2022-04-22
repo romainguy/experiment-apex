@@ -34,7 +34,7 @@ fun Element.Button(model: ButtonModel) = ChildElement {
         isAntiAlias = true
     }
 
-    Render { providers, element, canvas ->
+    Render { providers, element, renderer ->
         with (providers.get<DensityProvider>()) {
             val theme = providers.get<ThemeProvider>()
             val bounds = element.component<LayoutComponent>().bounds
@@ -46,15 +46,6 @@ fun Element.Button(model: ButtonModel) = ChildElement {
                 val color = if (model.isEnabled) theme.contentBackground else theme.contentDisabled
                 paint.color =
                     (if (!internalState.isPressed) color else color.complementary()).toArgb()
-                canvas.drawRoundRect(
-                    0.0f,
-                    0.0f,
-                    bounds.width(),
-                    bounds.height(),
-                    radius,
-                    radius,
-                    paint
-                )
             }
 
             if (theme.style != Paint.Style.FILL) {
@@ -64,16 +55,14 @@ fun Element.Button(model: ButtonModel) = ChildElement {
                 paint.color =
                     (if (!internalState.isPressed) color else color.complementary()).toArgb()
 
-                canvas.drawRoundRect(
-                    0.0f,
-                    0.0f,
-                    bounds.width(),
-                    bounds.height(),
-                    radius,
-                    radius,
-                    paint
-                )
             }
+            renderer.style = paint
+
+            renderer.drawRoundRect(
+                Rect(0f, 0f, bounds.width(), bounds.height()),
+                Point(radius, radius)
+            )
+
 
             val color = if (model.isEnabled) theme.text else theme.disabled
             paint.color = (if (!internalState.isPressed) color else color.complementary()).toArgb()
@@ -82,7 +71,10 @@ fun Element.Button(model: ButtonModel) = ChildElement {
 
             val x = (bounds.width() - internalState.textWidth) * 0.5f
             val y = (bounds.height() - internalState.textHeight) * 0.5f - paint.ascent()
-            canvas.drawText(model.label, x, y, paint)
+            renderer.style = paint
+            renderer.move(x, y)
+            renderer.drawText(model.label)
+            renderer.move(-x, -y)
         }
     }
 
