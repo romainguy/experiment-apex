@@ -30,11 +30,7 @@ class Providers {
         providers[type] = provider
     }
 
-    fun copyOf(): Providers {
-        val p = Providers()
-        p.providers.putAll(providers)
-        return p
-    }
+    fun copyOf(): Providers = Providers().apply { providers.putAll(this@Providers.providers) }
 }
 
 class DensityProvider(val density: Float) {

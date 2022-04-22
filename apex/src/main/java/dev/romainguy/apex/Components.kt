@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package dev.romainguy.apex
 
 import android.graphics.Canvas
@@ -27,10 +29,6 @@ abstract class LayoutComponent {
 
     fun minSize(providers: Providers, element: Element) = EmptySize
     fun maxSize(providers: Providers, element: Element) = UnboundedSize
-}
-
-fun Element.Layout(layout: LayoutComponent) {
-    addComponent(layout)
 }
 
 fun Element.Layout(layout: (providers: Providers, element: Element, size: SizeF) -> SizeF) {
@@ -71,11 +69,11 @@ class PaddingComponent(val padding: RectF) {
     constructor(padding: Float) : this(RectF(padding, padding, padding, padding))
 }
 
-fun Element.Padding(padding: RectF) {
+inline fun Element.Padding(padding: RectF) {
     addComponent(PaddingComponent(padding))
 }
 
-fun Element.Padding(padding: Float) {
+inline fun Element.Padding(padding: Float) {
     addComponent(PaddingComponent(padding))
 }
 
@@ -91,10 +89,10 @@ enum class HorizontalAlignment {
     End
 }
 
-fun Element.Alignment(alignment: VerticalAlignment) {
+inline fun Element.Alignment(alignment: VerticalAlignment) {
     addComponent(alignment)
 }
 
-fun Element.Alignment(alignment: HorizontalAlignment) {
+inline fun Element.Alignment(alignment: HorizontalAlignment) {
     addComponent(alignment)
 }
