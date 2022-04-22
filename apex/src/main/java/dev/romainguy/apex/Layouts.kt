@@ -22,7 +22,9 @@ fun Element.Row(elementPadding: Float = 8.0f, content: Element.() -> Unit = { })
         val density = providers.get<DensityProvider>()
         val elementOffset = density.toPx(elementPadding)
 
-        val padding = element.componentOrNull<PaddingComponent>()?.padding ?: EmptyBounds
+        val padding = density.toPx(
+            element.componentOrNull<PaddingComponent>()?.padding ?: EmptyBounds
+        )
 
         var x = padding.left
         val y = padding.top
@@ -61,7 +63,9 @@ fun Element.Column(elementPadding: Float = 8.0f, content: Element.() -> Unit = {
         val density = providers.get<DensityProvider>()
         val elementOffset = density.toPx(elementPadding)
 
-        val padding = element.componentOrNull<PaddingComponent>()?.padding ?: EmptyBounds
+        val padding = density.toPx(
+            element.componentOrNull<PaddingComponent>()?.padding ?: EmptyBounds
+        )
 
         val x = padding.left
         var y = padding.top
