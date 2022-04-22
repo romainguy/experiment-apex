@@ -2,7 +2,6 @@
 
 package dev.romainguy.apex
 
-import android.graphics.Canvas
 import android.graphics.RectF
 import android.util.SizeF
 import android.view.MotionEvent
@@ -11,13 +10,13 @@ val EmptySize = SizeF(0.0f, 0.0f)
 val UnboundedSize = SizeF(Float.MAX_VALUE, Float.MAX_VALUE)
 
 interface RenderComponent {
-    fun render(providers: Providers, element: Element, canvas: Canvas)
+    fun render(providers: Providers, element: Element, renderer: Renderer)
 }
 
-fun Element.Render(render: (providers: Providers, element: Element, canvas: Canvas) -> Unit) {
+fun Element.Render(render: (providers: Providers, element: Element, renderer: Renderer) -> Unit) {
     addComponent(object : RenderComponent {
-        override fun render(providers: Providers, element: Element, canvas: Canvas) {
-            render(providers, element, canvas)
+        override fun render(providers: Providers, element: Element, renderer: Renderer) {
+            render(providers, element, renderer)
         }
     })
 }

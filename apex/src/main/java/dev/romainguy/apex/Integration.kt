@@ -3,13 +3,13 @@ package dev.romainguy.apex
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.PointF
 import android.graphics.RectF
 import android.util.SizeF
 import android.view.*
 import androidx.core.graphics.contains
-import androidx.core.graphics.withTranslation
+import dev.romainguy.apex.android.AndroidRenderer
 
 private fun layout(providers: Providers, element: Element, size: SizeF) {
     element.forEachChild { child ->
@@ -42,7 +42,7 @@ private fun layout(providers: Providers, element: Element, size: SizeF) {
     }
 }
 
-private fun draw(providers: Providers, element: Element, canvas: Canvas) {
+private fun draw(providers: Providers, element: Element, renderer: Renderer) {
     element.forEachChild { child ->
         val localProviders = providers.copyOf()
 
@@ -51,13 +51,12 @@ private fun draw(providers: Providers, element: Element, canvas: Canvas) {
         }
 
         val bounds = child.componentOrNull<LayoutComponent>()?.bounds ?: EmptyBounds
-        canvas.withTranslation(bounds.left, bounds.top) {
-            child.applyComponent<RenderComponent> {
-                render(localProviders, child, canvas)
-            }
-
-            draw(localProviders, child, canvas)
+        renderer.move(bounds.left, bounds.top)
+        child.applyComponent<RenderComponent> {
+            render(localProviders, child, renderer)
         }
+        draw(localProviders, child, renderer)
+        renderer.move(-bounds.left, -bounds.top)
     }
 }
 
@@ -104,6 +103,8 @@ private class RootElement(context: Context) : Element() {
 
     var size: SizeF = SizeF(0.0f, 0.0f)
 
+    private val renderer = AndroidRenderer(Paint())
+
     private var surface: SurfaceHolder? = null
 
     private val frame = object : Choreographer.FrameCallback {
@@ -119,7 +120,8 @@ private class RootElement(context: Context) : Element() {
 
             with (surface?.lockHardwareCanvas()!!) {
                 drawColor(rootProviders.get<ThemeProvider>().background.toArgb())
-                draw(rootProviders, this@RootElement, this)
+                renderer.canvas = this
+                draw(rootProviders, this@RootElement, renderer)
                 surface?.unlockCanvasAndPost(this)
             }
 

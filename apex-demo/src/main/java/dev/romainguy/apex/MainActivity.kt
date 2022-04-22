@@ -116,14 +116,14 @@ fun Element.Image(model: ImageModel) = ChildElement {
         SizeF(width, height)
     }
 
-    Render { _, element, canvas ->
+    Render { _, element, renderer ->
         val bitmap = element.component<ImageModel>().bitmap
         val bounds = element.component<LayoutComponent>().bounds
-        canvas.drawBitmap(
+        renderer.style = paint
+        renderer.drawBitmap(
             bitmap,
             Rect(0, 0, bitmap.width, bitmap.height),
-            RectF(0.0f, 0.0f, bounds.width(), bounds.height()),
-            paint
+            Rect(0.0f, 0.0f, bounds.width(), bounds.height())
         )
     }
 }
