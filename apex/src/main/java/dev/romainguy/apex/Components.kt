@@ -6,7 +6,7 @@ import android.util.SizeF
 import android.view.MotionEvent
 
 val EmptySize = SizeF(0.0f, 0.0f)
-val UnboundSize = SizeF(Float.MAX_VALUE, Float.MAX_VALUE)
+val UnboundedSize = SizeF(Float.MAX_VALUE, Float.MAX_VALUE)
 
 interface RenderComponent {
     fun render(providers: Providers, element: Element, canvas: Canvas)
@@ -26,7 +26,7 @@ abstract class LayoutComponent {
     abstract fun layout(providers: Providers, element: Element, size: SizeF): SizeF
 
     fun minSize(providers: Providers, element: Element) = EmptySize
-    fun maxSize(providers: Providers, element: Element) = UnboundSize
+    fun maxSize(providers: Providers, element: Element) = UnboundedSize
 }
 
 fun Element.Layout(layout: LayoutComponent) {

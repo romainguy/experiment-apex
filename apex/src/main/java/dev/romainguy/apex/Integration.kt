@@ -46,7 +46,7 @@ private fun draw(providers: Providers, element: Element, canvas: Canvas) {
     element.child { child ->
         val localProviders = providers.copyOf()
 
-        child.component<ProviderComponent>{
+        child.component<ProviderComponent> {
             provide(localProviders, child)
         }
 
