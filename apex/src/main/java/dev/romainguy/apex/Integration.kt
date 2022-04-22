@@ -12,14 +12,14 @@ import androidx.core.graphics.contains
 import androidx.core.graphics.withTranslation
 
 private fun layout(providers: Providers, element: Element, size: SizeF) {
-    element.child { child ->
+    element.forEachChild { child ->
         val localProviders = providers.copyOf()
 
-        child.component<ProviderComponent> {
+        child.applyComponent<ProviderComponent> {
             provide(localProviders, child)
         }
 
-        child.component<LayoutComponent> {
+        child.applyComponent<LayoutComponent> {
             val minSize = minSize(localProviders, child)
             val maxSize = maxSize(localProviders, child)
             val childSize = min(max(minSize, layout(localProviders, child, size)), maxSize)
@@ -43,16 +43,16 @@ private fun layout(providers: Providers, element: Element, size: SizeF) {
 }
 
 private fun draw(providers: Providers, element: Element, canvas: Canvas) {
-    element.child { child ->
+    element.forEachChild { child ->
         val localProviders = providers.copyOf()
 
-        child.component<ProviderComponent> {
+        child.applyComponent<ProviderComponent> {
             provide(localProviders, child)
         }
 
         val bounds = child.componentOrNull<LayoutComponent>()?.bounds ?: EmptyBounds
         canvas.withTranslation(bounds.left, bounds.top) {
-            child.component<RenderComponent> {
+            child.applyComponent<RenderComponent> {
                 render(localProviders, child, canvas)
             }
 
@@ -70,10 +70,10 @@ private fun motion(
 ): Boolean {
     var done = false
 
-    element.child { child ->
+    element.forEachChild { child ->
         val localProviders = providers.copyOf()
 
-        child.component<ProviderComponent> {
+        child.applyComponent<ProviderComponent> {
             provide(localProviders, child)
         }
 
@@ -81,7 +81,7 @@ private fun motion(
         val bounds = RectF(sourceBounds).apply {  offset(x, y) }
 
         if (PointF(event.x, event.y) in bounds) {
-            child.component<MotionInputComponent> {
+            child.applyComponent<MotionInputComponent> {
                 if (motionInput(providers, child, event)) {
                     done = true
                 }
@@ -92,7 +92,7 @@ private fun motion(
         }
 
         if (done) {
-            return@child
+            return@forEachChild
         }
     }
 
@@ -111,7 +111,7 @@ private class RootElement(context: Context) : Element() {
             if (surface == null) return
 
             val rootProviders = providers.copyOf()
-            component<ProviderComponent> {
+            applyComponent<ProviderComponent> {
                 provide(rootProviders, this@RootElement)
             }
 
@@ -146,7 +146,7 @@ private class RootElement(context: Context) : Element() {
 
     fun onMotion(event: MotionEvent): Boolean {
         val rootProviders = providers.copyOf()
-        component<ProviderComponent> {
+        applyComponent<ProviderComponent> {
             provide(rootProviders, this@RootElement)
         }
 

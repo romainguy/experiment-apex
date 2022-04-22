@@ -19,7 +19,7 @@ open class Element(content: Element.() -> Unit = { }) {
         return this
     }
 
-    fun child(action: (Element) -> Unit) {
+    fun forEachChild(action: (Element) -> Unit) {
         for (child in children) {
             action(child)
         }
@@ -66,14 +66,14 @@ open class Element(content: Element.() -> Unit = { }) {
     inline fun <reified T : Any> componentOrNull() = componentOrNull(T::class)
 
     @Suppress("UNCHECKED_CAST")
-    fun <T: Any> component(type: KClass<T>, action: T.()-> Unit) {
+    fun <T: Any> applyComponent(type: KClass<T>, action: T.()-> Unit) {
         for (component in components) {
             if (type.isInstance(component)) (component as T).action()
         }
     }
 
-    inline fun <reified T : Any> component(noinline action: T.() -> Unit) {
-        component(T::class, action)
+    inline fun <reified T : Any> applyComponent(noinline action: T.() -> Unit) {
+        applyComponent(T::class, action)
     }
 
     fun ChildElement(content: Element.() -> Unit): Element {

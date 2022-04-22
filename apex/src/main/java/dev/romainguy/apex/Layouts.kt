@@ -28,8 +28,8 @@ fun Element.Row(elementPadding: Float = 8.0f, content: Element.() -> Unit = { })
         val y = padding.top
         var height = 0.0f
 
-        element.child { child ->
-            child.component<LayoutComponent> {
+        element.forEachChild { child ->
+            child.applyComponent<LayoutComponent> {
                 val minSize = minSize(providers, child)
                 val maxSize = maxSize(providers, child)
 
@@ -67,8 +67,8 @@ fun Element.Column(elementPadding: Float = 8.0f, content: Element.() -> Unit = {
         var y = padding.top
         var width = 0.0f
 
-        element.child { child ->
-            child.component<LayoutComponent> {
+        element.forEachChild { child ->
+            child.applyComponent<LayoutComponent> {
                 val minSize = minSize(providers, child)
                 val maxSize = maxSize(providers, child)
 
