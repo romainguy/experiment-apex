@@ -35,7 +35,7 @@ fun Element.Button(model: ButtonModel) = ChildElement {
         var textHeight = 0.0f
 
         override fun layout(providers: Providers, element: Element, size: SizeF): SizeF {
-            with(providers.get<DensityProvider>()) {
+            with (providers.get<DensityProvider>()) {
                 val theme = providers.get<ThemeProvider>()
                 val padding = element.component<PaddingComponent>().padding.toPx()
 
@@ -55,7 +55,7 @@ fun Element.Button(model: ButtonModel) = ChildElement {
     }
 
     Render { providers, element, canvas ->
-        with(providers.get<DensityProvider>()) {
+        with (providers.get<DensityProvider>()) {
             val theme = providers.get<ThemeProvider>()
             val bounds = element.component<LayoutComponent>().bounds
             val radius = theme.cornerRadius.toPx()
