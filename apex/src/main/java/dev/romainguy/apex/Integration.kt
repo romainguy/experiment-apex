@@ -3,7 +3,6 @@ package dev.romainguy.apex
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.Paint
 import android.graphics.PointF
 import android.graphics.RectF
 import android.util.SizeF

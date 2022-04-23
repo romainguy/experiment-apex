@@ -20,8 +20,6 @@ interface Renderer {
     fun drawRoundRect(rect: Rect, radius: Point, style: Paint)
 }
 
-
-
 data class Point(val x: Float, val y: Float)
 
 data class Rect(val left: Float, val top: Float, val right: Float, val bottom: Float)
