@@ -11,30 +11,28 @@ fun Rect.toRect(): android.graphics.Rect {
     return android.graphics.Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
 }
 
-class AndroidRenderer(override var style: Paint) : Renderer {
+class AndroidRenderer(val canvas: Canvas) : Renderer {
     override var position: Point
         get() = Point(0f, 0f)
         set(value) = canvas.translate(value.x, value.y)
 
-    var canvas = Canvas()
-
-    override fun drawText(text: String) {
+    override fun drawText(text: String, style: Paint) {
         canvas.drawText(text, position.x, position.y, style)
     }
 
-    override fun drawBitmap(bitmap: Bitmap) {
+    override fun drawBitmap(bitmap: Bitmap, style: Paint) {
         canvas.drawBitmap(bitmap, position.x, position.y, style)
     }
 
-    override fun drawBitmap(bitmap: Bitmap, src: Rect, dst: Rect) {
+    override fun drawBitmap(bitmap: Bitmap, src: Rect, dst: Rect, style: Paint) {
         canvas.drawBitmap(bitmap, src.toRect(), dst.toRect(), style)
     }
 
-    override fun drawRect(rect: Rect) {
+    override fun drawRect(rect: Rect, style: Paint) {
         canvas.drawRect(rect, style)
     }
 
-    override fun drawRoundRect(rect: Rect, radius: Point) {
+    override fun drawRoundRect(rect: Rect, radius: Point, style: Paint) {
         canvas.drawRoundRect(rect, radius, style)
     }
 }

@@ -5,20 +5,19 @@ import android.graphics.Paint
 
 interface Renderer {
     // TODO: abstract Paint into platform-agnostic rendering style
-    var style: Paint
     var position: Point
 
     fun move(x: Float, y: Float) {
         position = Point(position.x + x, position.y + y)
     }
 
-    fun drawText(text: String)
+    fun drawText(text: String, style: Paint)
 
     // TODO: abstract Bitmap into platform-agnostic image object
-    fun drawBitmap(bitmap: Bitmap)
-    fun drawBitmap(bitmap: Bitmap, src: Rect, dst: Rect)
-    fun drawRect(rect: Rect)
-    fun drawRoundRect(rect: Rect, radius: Point)
+    fun drawBitmap(bitmap: Bitmap, style: Paint)
+    fun drawBitmap(bitmap: Bitmap, src: Rect, dst: Rect, style: Paint)
+    fun drawRect(rect: Rect, style: Paint)
+    fun drawRoundRect(rect: Rect, radius: Point, style: Paint)
 }
 
 

@@ -103,8 +103,6 @@ private class RootElement(context: Context) : Element() {
 
     var size: SizeF = SizeF(0.0f, 0.0f)
 
-    private val renderer = AndroidRenderer(Paint())
-
     private var surface: SurfaceHolder? = null
 
     private val frame = object : Choreographer.FrameCallback {
@@ -120,7 +118,7 @@ private class RootElement(context: Context) : Element() {
 
             with (surface?.lockHardwareCanvas()!!) {
                 drawColor(rootProviders.get<ThemeProvider>().background.toArgb())
-                renderer.canvas = this
+                val renderer = AndroidRenderer(this)
                 draw(rootProviders, this@RootElement, renderer)
                 surface?.unlockCanvasAndPost(this)
             }
