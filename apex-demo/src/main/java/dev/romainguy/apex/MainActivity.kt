@@ -122,7 +122,7 @@ fun Element.Image(model: ImageModel) = ChildElement {
         renderer.drawBitmap(
             bitmap,
             Rect(0, 0, bitmap.width, bitmap.height),
-            Rect(0.0f, 0.0f, bounds.width(), bounds.height()),
+            Rect(0, 0, bounds.width(), bounds.height()),
             paint
         )
     }

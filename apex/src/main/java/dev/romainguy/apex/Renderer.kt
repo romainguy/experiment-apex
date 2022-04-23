@@ -26,3 +26,6 @@ data class Rect(val left: Float, val top: Float, val right: Float, val bottom: F
 
 fun Rect(left: Int, top: Int, right: Int, bottom: Int) =
     Rect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
+
+fun Rect(left: Int, top: Int, right: Float, bottom: Float) =
+    Rect(left.toFloat(), top.toFloat(), right, bottom)
