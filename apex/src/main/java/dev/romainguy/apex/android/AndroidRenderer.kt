@@ -8,11 +8,11 @@ import dev.romainguy.apex.Point
 import dev.romainguy.apex.Rect
 import dev.romainguy.apex.Renderer
 
-fun Rect.toRect(): android.graphics.Rect {
+internal fun Rect.toRect(): android.graphics.Rect {
     return android.graphics.Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
 }
 
-class AndroidRenderer(val canvas: Canvas) : Renderer {
+internal class AndroidRenderer(val canvas: Canvas) : Renderer {
     override var position: Point = Point(0f, 0f)
 
     override fun drawText(text: String, style: Paint) {
