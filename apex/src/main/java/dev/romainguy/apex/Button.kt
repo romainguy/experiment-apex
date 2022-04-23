@@ -56,11 +56,11 @@ fun Element.Button(model: ButtonModel) = ChildElement {
                     (if (!internalState.isPressed) color else color.complementary()).toArgb()
 
             }
-            renderer.style = paint
 
             renderer.drawRoundRect(
                 Rect(0f, 0f, bounds.width(), bounds.height()),
-                Point(radius, radius)
+                Point(radius, radius),
+                paint
             )
 
 
@@ -71,9 +71,8 @@ fun Element.Button(model: ButtonModel) = ChildElement {
 
             val x = (bounds.width() - internalState.textWidth) * 0.5f
             val y = (bounds.height() - internalState.textHeight) * 0.5f - paint.ascent()
-            renderer.style = paint
             renderer.move(x, y)
-            renderer.drawText(model.label)
+            renderer.drawText(model.label, paint)
             renderer.move(-x, -y)
         }
     }

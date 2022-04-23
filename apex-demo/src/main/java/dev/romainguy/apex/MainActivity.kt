@@ -119,11 +119,11 @@ fun Element.Image(model: ImageModel) = ChildElement {
     Render { _, element, renderer ->
         val bitmap = element.component<ImageModel>().bitmap
         val bounds = element.component<LayoutComponent>().bounds
-        renderer.style = paint
         renderer.drawBitmap(
             bitmap,
             Rect(0, 0, bitmap.width, bitmap.height),
-            Rect(0.0f, 0.0f, bounds.width(), bounds.height())
+            Rect(0.0f, 0.0f, bounds.width(), bounds.height()),
+            paint
         )
     }
 }
